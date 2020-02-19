@@ -11,8 +11,8 @@ import java.util.*;
  *
  */
 public class LanguageRecognizerG {
-	
-	String str;
+
+	static String str;
 
 	/**
 	 * 
@@ -20,52 +20,68 @@ public class LanguageRecognizerG {
 	public LanguageRecognizerG() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * Check if a string is language G
 	 * @return true of valid grammar of language G
 	 */
-	private boolean recursiveRecogG(String str)
+	private static boolean recursiveRecogG(String str)
 	{
-		str = this.str;
 		if(str.isEmpty())
 		{
+			System.out.println("true");
 			return true;
 		}
 		else if(str.length() == 1 && checkE(str.charAt(0)))
 		{
+			System.out.println("true");
 			return true;
 		}
-		//else if()
-		
-		return true;//return true of the language is valid
+		else if(str.length() == 2 && checkV(str.charAt(0)) && checkE(str.charAt(1)))
+		{
+			System.out.println("true");
+			return true;
+		}
+		System.out.println("false");
+		return false;//return false if invalid
 	}
-	
+
 	/**
 	 * check if char is of E type
 	 * @param ch char to be tested
 	 * @return true if is type E
 	 */
-	private boolean checkE(char ch)
+	private static boolean checkE(char ch)
 	{
-		return true;
+		if(ch == 'W' || ch == 'A')
+		{
+			return true;
+		}
+		return false;//return false if not E
 	}
-	
+
 	/**
 	 * check if char is of V type
 	 * @param ch char to be tested
 	 * @return true if is type V
 	 */
-	private boolean checkV(char ch)
+	private static boolean checkV(char ch)
 	{
-		return true;
+		if(ch == '&' || ch == '#')
+		{
+			return true;
+		}
+		return false;//return false if not V
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Scanner input = 
+		Scanner input = new Scanner(System.in);
+        System.out.print("Enter the G-language word to check:");
+        str=input.next();
+        recursiveRecogG(str);
 	}
 
 }
