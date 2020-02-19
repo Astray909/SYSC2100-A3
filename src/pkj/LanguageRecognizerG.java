@@ -7,12 +7,12 @@ package pkj;
  * @author justinhuang
  *
  */
-public class StackListBased {
+public class LanguageRecognizerG {
 
 	/**
 	 * 
 	 */
-	public StackListBased() {
+	public LanguageRecognizerG() {
 		// TODO Auto-generated constructor stub
 	}
 
