@@ -16,7 +16,7 @@ public class StackListBased {
 	LinkedList<String> items;
 	String top;
 	/**
-	 * constructor
+	 * empty constructor
 	 */
 	public StackListBased() {
 		// TODO Auto-generated constructor stub
