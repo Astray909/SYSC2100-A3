@@ -42,27 +42,45 @@ public class StackListBased {
 		return re;
 	}
 
+	/**
+	 * to see if items is empty
+	 * @return true of empty
+	 */
 	private boolean isEmpty()
 	{
 		return items.isEmpty();
 	}
 
-	private void push()
+	/**
+	 * add item to items
+	 * @param item
+	 */
+	private void push(String item)
 	{
-		return;
+		items.add(item);
 	}
 
+	/**
+	 * pops the top item
+	 * @return the item popped
+	 */
 	private String pop()
 	{
-		String s=items.getLast();
+		top =items.getLast();
 		items.removeLast();
-		return s;
+		return top;
 	}
 
-	private void peek()
+	/**
+	 * peeks the top item
+	 * @return the item peeked
+	 */
+	private String peek()
 	{
-		return;
+		top = items.getLast();
+		return top;
 	}
+	
 	/**
 	 * main function
 	 * @param args
