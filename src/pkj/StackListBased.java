@@ -12,46 +12,59 @@ import java.lang.Exception;
  *
  */
 public class StackListBased {
-	
+
 	LinkedList<String> items;
 	String top;
 	/**
-	 * 
+	 * constructor
 	 */
 	public StackListBased() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
+	/**
+	 * create a new LinkedList of strings
+	 */
 	private void createStack()
 	{
 		items = new LinkedList<String>();
 	}
-	
-	private void popAll()
+
+	/**
+	 * clone to all of items to a new List re, return that string, and clear items
+	 * @return the cloned list that contains all the original items
+	 */
+	private LinkedList<String> popAll()
 	{
-		return;
+		LinkedList<String> re = new LinkedList<String>();
+		re = (LinkedList<String>) items.clone();
+		items.clear();
+		return re;
 	}
 
-	private void isEmpty()
+	private boolean isEmpty()
 	{
-		return;
+		return items.isEmpty();
 	}
-	
+
 	private void push()
 	{
 		return;
 	}
-	
-	private void pop()
+
+	private String pop()
 	{
-		return;
+		String s=items.getLast();
+		items.removeLast();
+		return s;
 	}
-	
+
 	private void peek()
 	{
 		return;
 	}
 	/**
+	 * main function
 	 * @param args
 	 */
 	public static void main(String[] args) {
