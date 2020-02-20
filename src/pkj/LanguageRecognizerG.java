@@ -12,12 +12,10 @@ import java.util.*;
  */
 public class LanguageRecognizerG {
 
-	static String str;//string to check
-
 	/**
 	 * 
 	 */
-	public LanguageRecognizerG() {
+	public LanguageRecognizerG(String str) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,26 +23,31 @@ public class LanguageRecognizerG {
 	 * Check if a string is language G
 	 * @return true of valid grammar of language G
 	 */
-	private static boolean recursiveRecogG(String str)
+	private boolean recursiveRecogG(String str)
 	{
-		if(str.isEmpty())//test for empty string
+		if(str.isEmpty())
 		{
 			return true;
 		}
-		else if(str.length() == 1 && checkE(str.charAt(0)))//test for E
+		else if(str.length()==1)
+		{
+			if(checkE(str.charAt(0)))
+			{
+				return true;
+			}
+		}
+		else if(checkV(str.charAt(0)) && checkE(str.charAt(1)))
 		{
 			return true;
 		}
-		else if(str.length() == 2 && checkV(str.charAt(0)) && checkE(str.charAt(1)))//test for VE
+		else
 		{
-			return true;
+			if(checkE(str.charAt(0)) && checkV(str.charAt(str.length() -1)))
+			{
+				return recursiveRecogG(str.substring(1,str.length()-1));
+			}
 		}
-		else if(checkE(str.charAt(0)) && checkV(str.charAt(str.length() - 1)))//test for EGV with recursion
-		{
-			recursiveRecogG(str.substring(1,str.length()-1));
-			return true;
-		}
-		return false;//return false if invalid
+		return false;
 	}
 
 	/**
@@ -52,7 +55,7 @@ public class LanguageRecognizerG {
 	 * @param ch char to be tested
 	 * @return true if is type E
 	 */
-	private static boolean checkE(char ch)
+	private boolean checkE(char ch)
 	{
 		if(ch == '&' || ch == '#')
 		{
@@ -66,7 +69,7 @@ public class LanguageRecognizerG {
 	 * @param ch char to be tested
 	 * @return true if is type V
 	 */
-	private static boolean checkV(char ch)
+	private boolean checkV(char ch)
 	{
 		if(ch == 'W' || ch == 'A')
 		{
@@ -80,7 +83,7 @@ public class LanguageRecognizerG {
 	 * @param gee is G or not G
 	 * @return IS if is, is NOT if is not
 	 */
-	private static String printOut(boolean gee)
+	private String printOut(boolean gee)
 	{
 		if(gee)
 		{
@@ -100,10 +103,11 @@ public class LanguageRecognizerG {
 		//code for input scanner
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter the G-language word to check:\n");
-		str=input.next();
+		String str=input.next();
+		LanguageRecognizerG lG = new LanguageRecognizerG(str);
 
 		//printout
-		System.out.println("Recursion: Word \"" + str + "\" " + printOut(recursiveRecogG(str)) + " a word of the G language\n");
+		System.out.println("Recursion: Word \"" + str + "\" " + lG.printOut(lG.recursiveRecogG(str)) + " a word of the G language\n");
 
 		//want to run again?
 		Scanner again = new Scanner(System.in);
