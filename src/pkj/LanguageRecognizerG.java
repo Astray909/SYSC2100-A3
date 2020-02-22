@@ -80,7 +80,7 @@ public class LanguageRecognizerG {
 
 	/**
 	 * prints out IS or is NOT depends on the situation
-	 * @param gee is G or not G
+	 * @param gee is G or not G language
 	 * @return IS if is, is NOT if is not
 	 */
 	private String printOut(boolean gee)
