@@ -13,13 +13,14 @@ import java.lang.Exception;
  */
 public class StackListBased {
 
-	LinkedList<Character> items;
-	Character top;
+	LinkedList<String> items;
+	String top;
 	/**
 	 * empty constructor
 	 */
 	public StackListBased() {
 		// TODO Auto-generated constructor stub
+		items = new LinkedList<String>();
 	}
 
 	/**
@@ -27,17 +28,17 @@ public class StackListBased {
 	 */
 	void createStack()
 	{
-		items = new LinkedList<Character>();
+		items = new LinkedList<String>();
 	}
 
 	/**
 	 * clone to all of items to a new List re, return that string, and clear items
 	 * @return the cloned list that contains all the original items
 	 */
-	LinkedList<Character> popAll()
+	LinkedList<String> popAll()
 	{
-		LinkedList<Character> re = new LinkedList<Character>();
-		re = (LinkedList<Character>) items.clone();
+		LinkedList<String> re = new LinkedList<String>();
+		re = (LinkedList<String>) items.clone();
 		items.clear();
 		return re;
 	}
@@ -55,7 +56,7 @@ public class StackListBased {
 	 * add item to items
 	 * @param item
 	 */
-	void push(Character item)
+	void push(String item)
 	{
 		items.add(item);
 	}
@@ -64,7 +65,7 @@ public class StackListBased {
 	 * pops the top item
 	 * @return the item popped
 	 */
-	Character pop()
+	String pop()
 	{
 		top =items.getLast();
 		items.removeLast();
@@ -75,17 +76,22 @@ public class StackListBased {
 	 * peeks the top item
 	 * @return the item peeked
 	 */
-	Character peek()
+	String peek()
 	{
 		top = items.getLast();
 		return top;
+	}
+	
+	int size()
+	{
+		return items.size();
 	}
 
 	/**
 	 * main function
 	 * @param args
 	 */
-	public static void main(Character[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}

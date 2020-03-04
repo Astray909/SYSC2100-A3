@@ -13,7 +13,7 @@ import java.lang.Exception;
  */
 public class InfixCalculator {
 
-	private static StackListBased inFStack;
+	private static StackListBased resStack;
 	private static StackListBased postFStack;
 
 	/**
@@ -28,14 +28,17 @@ public class InfixCalculator {
 	 */
 	public static void main(String[] args) throws RuntimeException{
 
-		inFStack = new StackListBased();
+		resStack = new StackListBased();
 		postFStack = new StackListBased();
-		inFStack.createStack();
+		resStack.createStack();
 		postFStack.createStack();
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter the infix expression to evaluate");
 		String inp = input.next();
+
+		System.out.println("postfix: " + convertPostfix(inp));
+		System.out.println("result: " + evaluateInfix(convertPostfix(inp)));
 	}
 
 	/**
@@ -48,116 +51,122 @@ public class InfixCalculator {
 		3.If you have openings bracket '(', push into the stack.
 		If you have closing bracket ')', pop all element from the stack until you reach '(' and add in the list.
 
-	 * @param str
-	 * @return
+	 * @param str infix expression
+	 * @return result
 	 */
-	private List<String> itpCon (String str)
+	private static String convertPostfix (String str)
 	{
-		boolean fg = false;
-		List<String> post = new ArrayList<String>();
+		String out = "";
 		for (int i = 0; i < str.length(); i++)
 		{
-			char ch = str.charAt(i);
-			if(ch == ' ')//test to see if a space is present
+			char c = str.charAt(i);
+			if(c == ' ' || c == '\t' || c == '\r' || c == '\n' || Character.isWhitespace(c))
 			{
 				continue;
 			}
-			if(checkCH(ch) == 0)
+			else if(checkPre(c)>0)
 			{
-				fg = false;
-				postFStack.push(ch);
-			}
-			else if(checkCH(ch) == 2)
-			{
-				fg = false;
-				if(postFStack.isEmpty())
+				while(!postFStack.isEmpty() && checkPre(postFStack.peek().charAt(0)) >= checkPre(c))
 				{
-					postFStack.push(ch);
+					out += postFStack.pop();
 				}
-				else
-				{
-					while(!postFStack.isEmpty() && checkPre(postFStack.peek(), ch))
-					{
-						post.add(postFStack.pop()+"");
-					}
-					postFStack.push(ch);
-				}
+				postFStack.push(String.valueOf(c));
 			}
-			else if(checkCH(ch) == 1)
+
+			else if(c=='(')
 			{
-				fg = false;
+				postFStack.push(String.valueOf(c));
+			}
+			else if(c==')')
+			{
 				while(!postFStack.isEmpty())
 				{
-					if(checkCH(postFStack.peek()) == 1)
+					if(postFStack.peek().charAt(0) == '(')
 					{
 						postFStack.pop();
 						break;
 					}
 					else
 					{
-						post.add(postFStack.pop() + "");
+						out+=postFStack.pop();
 					}
 				}
 			}
 			else
 			{
-				if(fg)
+				out += c;
+			}
+		}
+		for(int i = 0; i <= postFStack.size(); i++)
+		{
+			out += postFStack.pop();
+		}
+		return out;
+	}
+	
+	/**
+	 * 	The algorithm to Calculate PostFix.
+
+		Create a stack to store operands (or values).
+		Scan the ArrayList and do following for every scanned element.
+		2.1) If the element is a number, push it into the stack
+		2.2) If the element is an operator, pop operands for the operator from the stack. Evaluate the operator and push the result back to the stack
+		When the expression is ended, the number in the stack is the final answer
+	 * @param str postfix expression
+	 * @return result
+	 */
+	private static String evaluateInfix (String str)
+	{
+		int x = 0, y = 0;
+		char ch[] = str.toCharArray();
+		for(char c: ch)
+		{
+			if(c >= '0' && c <= '9')
+			{
+				resStack.push(Integer.toString((int)(c - '0')));
+			}
+			else
+			{
+				y = Integer.parseInt(resStack.pop());
+				x = Integer.parseInt(resStack.pop());
+				switch(c)
 				{
-					String lastNumber = post.get(post.size()-1);
-					lastNumber += ch;
-					post.set(post.size()-1, lastNumber);
-				}
-				else
-				{
-					post.add(ch + "");
-					fg = true;
+				case'+':
+					resStack.push(Integer.toString(x + y));
+					break;
+				case'-':
+					resStack.push(Integer.toString(x - y));
+					break;
+				case'*':
+					resStack.push(Integer.toString(x * y));
+					break;
+				case'/':
+					resStack.push(Integer.toString(x / y));
+					break;
 				}
 			}
 		}
-		while(!postFStack.isEmpty())
-		{
-			post.add(postFStack.pop()+"");
-		}
-		return post;
+		return resStack.pop();
 	}
 
-	private int checkCH(char chr)
+	/**
+	 * check for the precedence of operands
+	 * @param chr
+	 * @return corresponding operands
+	 */
+	private static int checkPre(char chr)
 	{
-		if(chr == '(')
+		switch (chr)
 		{
-			return 0;
-		}
-		else if(chr == ')')
-		{
+		case '+':
+		case '-':
 			return 1;
-		}
-		else if(chr == '+' || chr== '-' || chr == '*' || chr == '/')
-		{
+		case '*':
+		case '/':
 			return 2;
+		case '^':
+			return 3;
 		}
-		else
-		{
-			return -1;
-		}
-	}
-
-	private boolean checkPre(char sta, char sca)
-	{
-		if(sta == '+' || sta == '-')
-		{
-			if(sca == '+' || sca == '-')
-			{
-				return true;
-			}
-			else if(sca == '*' || sca == '/')
-			{
-				return false;
-			}
-		}
-		else if(sta == '*' || sta == '/')
-		{
-			return true;
-		}
-		return false;
+		return -1;
 	}
 }
