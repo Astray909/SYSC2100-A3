@@ -42,7 +42,7 @@ public class InfixCalculator {
 	}
 
 	/**
-	 *	The algorithm to Convert Infix to PostFix.
+	 *	The algorithm to Convert Infix to PostFix. NOT WORKING
 
 		If the character is operand, append in the List.
 		If the character is operator
@@ -105,7 +105,7 @@ public class InfixCalculator {
 	}
 	
 	/**
-	 * 	The algorithm to Calculate PostFix.
+	 * 	The algorithm to Calculate PostFix. NOT WORKING EXCEPT FOR SINGLE INTEGERS
 
 		Create a stack to store operands (or values).
 		Scan the ArrayList and do following for every scanned element.
