@@ -117,31 +117,31 @@ public class InfixCalculator {
 	 */
 	private static String evaluateInfix (String str)
 	{
-		int x = 0, y = 0;
-		char ch[] = str.toCharArray();
-		for(char c: ch)
+		int one = 0, two = 0;
+		for(int i = 0; i < str.length(); i++)
 		{
+			char c = str.charAt(i);
 			if(c >= '0' && c <= '9')
 			{
 				resStack.push(Integer.toString((int)(c - '0')));
 			}
 			else
 			{
-				y = Integer.parseInt(resStack.pop());
-				x = Integer.parseInt(resStack.pop());
+				two = Integer.parseInt(resStack.pop());
+				one = Integer.parseInt(resStack.pop());
 				switch(c)
 				{
 				case'+':
-					resStack.push(Integer.toString(x + y));
+					resStack.push(Integer.toString(one + two));
 					break;
 				case'-':
-					resStack.push(Integer.toString(x - y));
+					resStack.push(Integer.toString(one - two));
 					break;
 				case'*':
-					resStack.push(Integer.toString(x * y));
+					resStack.push(Integer.toString(one * two));
 					break;
 				case'/':
-					resStack.push(Integer.toString(x / y));
+					resStack.push(Integer.toString(one / two));
 					break;
 				}
 			}
